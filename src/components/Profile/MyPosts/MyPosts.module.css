@@ -1,0 +1,12 @@
+.content {
+    grid-area: content;
+    background-color: #fffacd;
+}
+
+.item {
+    color: gold;
+}
+
+.posts {
+    padding-left: 20px;
+}

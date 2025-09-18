@@ -15,10 +15,6 @@ a {
     text-decoration: none;
 }
 
-a:visited {
-    color: inherit; /* убираем фиолетовый цвет */
-}
-
 .app-wrapper-content {
     grid-area: content;
     background-color: #fffacd;

@@ -21,3 +21,7 @@
 .active {
     color: gold;
 }
+
+.flex {
+    display: flex;
+}

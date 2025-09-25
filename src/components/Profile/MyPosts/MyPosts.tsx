@@ -9,16 +9,19 @@ export const MyPosts = (props: any) => {
     const text: React.RefObject<HTMLTextAreaElement | null> = React.createRef();
 
     const addPost = () => {
+        props.addPost()
+     }
+
+    const handleOnchange = () => {
         const newPost = text.current?.value;
-        console.log(text.current?.value);
-        props.addPost(newPost)
+        if(newPost) props.updateNewPostText(newPost);
     }
 
     return (
         <main className={s.content}>
             <h3>MyPosts</h3>
             <div>
-                <textarea ref={text} name="postText" id="" cols={30} rows={5}></textarea>
+                <textarea ref={text} name="postText" id="" cols={30} rows={5} value={props.newPostText} onChange={handleOnchange} />
                 <div>
                     <button onClick={addPost}>Save</button>
                     <button>Remove</button>

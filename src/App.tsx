@@ -13,7 +13,13 @@ function App(props: any) {
             <Navbar/>
             <div className='app-wrapper-content'>
                 <Routes>
-                    <Route path="/profile" element={<Profile state={props.state.postPage.posts} addPost={props.addPost}/>}/>
+                    <Route path="/profile"
+                           element={<Profile state={props.state.postPage.posts}
+                                             newPostText={props.state.postPage.newPostText}
+                                             addPost={props.addPost}
+                                             updateNewPostText={props.updateNewPostText}
+                           />}
+                    />
                     <Route path="/dialogs/*" element={<Dialogs state={props.state.dialogsPage}/>}/>
                 </Routes>
             </div>

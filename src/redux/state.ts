@@ -1,3 +1,6 @@
+
+let rerenderEntireTree: any;
+
 const postsData = [
     {id: 1, message: 'Hi, how are you?', likesCount: 3},
     {id: 2, message: 'It\'s my first post', likesCount: 6},
@@ -22,9 +25,34 @@ const messages = [
 export const state = {
     postPage: {
         posts: postsData,
+        newPostText: 'it-kamasutra'
     },
     dialogsPage: {
         dialogs: dialogs,
         messages: messages,
     },
+}
+
+export const addNewPost = () => {
+    const newPost = {
+        id: state.postPage.posts.length + 1,
+        message: state.postPage.newPostText,
+        likesCount: 0
+    }
+    state.postPage.newPostText = '';
+    state.postPage.posts.push(newPost);
+
+    console.log('addNewPost', state);
+    rerenderEntireTree(state, addNewPost, updateNewPostText);
+
+}
+
+export const updateNewPostText = (newText: string) => {
+    state.postPage.newPostText = newText
+    console.log(state.postPage.newPostText)
+    rerenderEntireTree(state, addNewPost, updateNewPostText);
+}
+
+export const subscribe = (observer: any) => {
+    rerenderEntireTree = observer;
 }

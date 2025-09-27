@@ -25,6 +25,8 @@ export const store = {
         }
     },
     getState() {
+        // debugger
+
         return this._state
     },
     addNewPost() {
@@ -37,18 +39,19 @@ export const store = {
         this._state.postPage.posts.push(newPost);
 
         console.log('addNewPost', this._state);
-        rerenderEntireTree(this._state, this.addNewPost, this.updateNewPostText);
+        this._callSubscriber(this._state);
     },
     updateNewPostText(newText: string) {
         this._state.postPage.newPostText = newText
         console.log(this._state.postPage.newPostText)
-        rerenderEntireTree(this._state, this.addNewPost, this.updateNewPostText);
+        this._callSubscriber(this._state);
     },
-    subscribe(observer: any) {
-        rerenderEntireTree = observer;
+    subscribe(observer: (state: typeof this._state) => void ) {
+        this._callSubscriber = observer;
+    },
+    _callSubscriber(state: typeof this._state){
+        console.log('callSubscriber')
     }
 };
-
-let rerenderEntireTree: any;
 
 export default store

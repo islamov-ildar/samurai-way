@@ -4,8 +4,9 @@ import {Post} from "./Post/Post";
 
 export const MyPosts = (props: any) => {
 // debugger;
-    const posts = props.posts.map((p: { message: any; likesCount: any; }) => <Post message={p.message}
-                                                                                   likesCount={p.likesCount}/>);
+    const posts = props.posts.map((p: {id:number, message: any; likesCount: any; }) =>
+        <Post message={p.message} likesCount={p.likesCount} key={p.id}/>);
+
     const text: React.RefObject<HTMLTextAreaElement | null> = React.createRef();
 
     const addPost = () => {

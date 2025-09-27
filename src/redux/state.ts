@@ -21,7 +21,8 @@ export const store = {
                 {id: 2, message: 'How are you'},
                 {id: 3, message: 'Yo'},
                 {id: 4, message: 'KukarekuKukarekuKukareku999'},
-            ]
+            ],
+            newMessageText: '',
         }
     },
     getState() {
@@ -29,10 +30,10 @@ export const store = {
 
         return this._state
     },
-    subscribe(observer: (state: typeof this._state) => void ) {
+    subscribe(observer: (state: typeof this._state) => void) {
         this._callSubscriber = observer;
     },
-    _callSubscriber(state: typeof this._state){
+    _callSubscriber(state: typeof this._state) {
         console.log('callSubscriber', state)
     },
     dispatch(action: any) {
@@ -47,10 +48,20 @@ export const store = {
 
             console.log('addNewPost', this._state);
             this._callSubscriber(this._state);
-        }
-        if (action.type === actionTypes.UPDATE_NEW_POST_TEXT) {
+        } else if (action.type === actionTypes.UPDATE_NEW_POST_TEXT) {
             this._state.postPage.newPostText = action.newPostText
             console.log(this._state.postPage.newPostText)
+            this._callSubscriber(this._state);
+        } else if (action.type === actionTypes.SEND_MESSAGE) {
+            const newMessage = this._state.dialogsPage.newMessageText;
+            this._state.dialogsPage.messages.push({
+                id: this._state.dialogsPage.messages.length + 1, message: newMessage
+            });
+            this._state.dialogsPage.newMessageText = '';
+                this._callSubscriber(this._state);
+        } else if (action.type === actionTypes.UPDATE_NEW_MESSAGE_TEXT) {
+            console.log('UPDATE_NEW_MESSAGE_TEXT', action.payload)
+            this._state.dialogsPage.newMessageText = action.payload;
             this._callSubscriber(this._state);
         }
 
@@ -61,10 +72,22 @@ export const store = {
 export const actionTypes = {
     ADD_NEW_POST: 'ADD_NEW_POST',
     UPDATE_NEW_POST_TEXT: 'UPDATE_NEW_POST_TEXT',
+    SEND_MESSAGE: 'SEND_MESSAGE',
+    UPDATE_NEW_MESSAGE_TEXT: 'UPDATE_NEW_MESSAGE_TEXT',
 };
 
 export const addPostActionCreator = () => ({type: actionTypes.ADD_NEW_POST});
 
-export const updateNewPostTextPostActionCreator = (payload: string) => ({type: actionTypes.UPDATE_NEW_POST_TEXT, newPostText: payload});
+export const updateNewPostTextPostActionCreator = (payload: string) => ({
+    type: actionTypes.UPDATE_NEW_POST_TEXT,
+    newPostText: payload
+});
+
+export const sendMessageActionCreator = () => ({type: actionTypes.SEND_MESSAGE});
+
+export const updateNewMessageTextActionCreator = (payload: string) => ({
+    type: actionTypes.UPDATE_NEW_MESSAGE_TEXT,
+    payload: payload
+});
 
 export default store

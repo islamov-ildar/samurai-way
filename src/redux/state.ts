@@ -33,12 +33,10 @@ export const store = {
         this._callSubscriber = observer;
     },
     _callSubscriber(state: typeof this._state){
-        console.log('callSubscriber')
+        console.log('callSubscriber', state)
     },
     dispatch(action: any) {
-        console.log('action', action)
-        if (action.type === 'ADD_NEW_POST') {
-            // this.addNewPost();
+        if (action.type === actionTypes.ADD_NEW_POST) {
             const newPost = {
                 id: this._state.postPage.posts.length + 1,
                 message: this._state.postPage.newPostText,
@@ -50,17 +48,23 @@ export const store = {
             console.log('addNewPost', this._state);
             this._callSubscriber(this._state);
         }
-        if (action.type === 'UPDATE_NEW_POST_TEXT') {
-            // this.updateNewPostText(action.payload);
+        if (action.type === actionTypes.UPDATE_NEW_POST_TEXT) {
             this._state.postPage.newPostText = action.newPostText
             console.log(this._state.postPage.newPostText)
             this._callSubscriber(this._state);
         }
-        console.log(
-            'dispatch',
-            this._state
-        )
+
+        console.log('dispatch', this._state)
     }
 };
+
+export const actionTypes = {
+    ADD_NEW_POST: 'ADD_NEW_POST',
+    UPDATE_NEW_POST_TEXT: 'UPDATE_NEW_POST_TEXT',
+};
+
+export const addPostActionCreator = () => ({type: actionTypes.ADD_NEW_POST});
+
+export const updateNewPostTextPostActionCreator = (payload: string) => ({type: actionTypes.UPDATE_NEW_POST_TEXT, newPostText: payload});
 
 export default store

@@ -29,28 +29,37 @@ export const store = {
 
         return this._state
     },
-    addNewPost() {
-        const newPost = {
-            id: this._state.postPage.posts.length + 1,
-            message: this._state.postPage.newPostText,
-            likesCount: 0
-        }
-        this._state.postPage.newPostText = '';
-        this._state.postPage.posts.push(newPost);
-
-        console.log('addNewPost', this._state);
-        this._callSubscriber(this._state);
-    },
-    updateNewPostText(newText: string) {
-        this._state.postPage.newPostText = newText
-        console.log(this._state.postPage.newPostText)
-        this._callSubscriber(this._state);
-    },
     subscribe(observer: (state: typeof this._state) => void ) {
         this._callSubscriber = observer;
     },
     _callSubscriber(state: typeof this._state){
         console.log('callSubscriber')
+    },
+    dispatch(action: any) {
+        console.log('action', action)
+        if (action.type === 'ADD_NEW_POST') {
+            // this.addNewPost();
+            const newPost = {
+                id: this._state.postPage.posts.length + 1,
+                message: this._state.postPage.newPostText,
+                likesCount: 0
+            }
+            this._state.postPage.newPostText = '';
+            this._state.postPage.posts.push(newPost);
+
+            console.log('addNewPost', this._state);
+            this._callSubscriber(this._state);
+        }
+        if (action.type === 'UPDATE_NEW_POST_TEXT') {
+            // this.updateNewPostText(action.payload);
+            this._state.postPage.newPostText = action.newPostText
+            console.log(this._state.postPage.newPostText)
+            this._callSubscriber(this._state);
+        }
+        console.log(
+            'dispatch',
+            this._state
+        )
     }
 };
 

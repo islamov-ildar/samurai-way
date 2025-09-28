@@ -1,3 +1,7 @@
+import postPageReducer from "./postPageReducer";
+import dialogsReducer from "./dialogsPageReducer";
+import sidebarReducer from "./sidebarPageReducer";
+
 export const store = {
     _state: {
         postPage: {
@@ -23,7 +27,8 @@ export const store = {
                 {id: 4, message: 'KukarekuKukarekuKukareku999'},
             ],
             newMessageText: '',
-        }
+        },
+        sidebar: {}
     },
     getState() {
         // debugger
@@ -37,57 +42,14 @@ export const store = {
         console.log('callSubscriber', state)
     },
     dispatch(action: any) {
-        if (action.type === actionTypes.ADD_NEW_POST) {
-            const newPost = {
-                id: this._state.postPage.posts.length + 1,
-                message: this._state.postPage.newPostText,
-                likesCount: 0
-            }
-            this._state.postPage.newPostText = '';
-            this._state.postPage.posts.push(newPost);
+        this._state.postPage = postPageReducer(this._state.postPage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action);
 
-            console.log('addNewPost', this._state);
-            this._callSubscriber(this._state);
-        } else if (action.type === actionTypes.UPDATE_NEW_POST_TEXT) {
-            this._state.postPage.newPostText = action.newPostText
-            console.log(this._state.postPage.newPostText)
-            this._callSubscriber(this._state);
-        } else if (action.type === actionTypes.SEND_MESSAGE) {
-            const newMessage = this._state.dialogsPage.newMessageText;
-            this._state.dialogsPage.messages.push({
-                id: this._state.dialogsPage.messages.length + 1, message: newMessage
-            });
-            this._state.dialogsPage.newMessageText = '';
-                this._callSubscriber(this._state);
-        } else if (action.type === actionTypes.UPDATE_NEW_MESSAGE_TEXT) {
-            console.log('UPDATE_NEW_MESSAGE_TEXT', action.payload)
-            this._state.dialogsPage.newMessageText = action.payload;
-            this._callSubscriber(this._state);
-        }
+        this._callSubscriber(this._state);
 
         console.log('dispatch', this._state)
     }
 };
-
-export const actionTypes = {
-    ADD_NEW_POST: 'ADD_NEW_POST',
-    UPDATE_NEW_POST_TEXT: 'UPDATE_NEW_POST_TEXT',
-    SEND_MESSAGE: 'SEND_MESSAGE',
-    UPDATE_NEW_MESSAGE_TEXT: 'UPDATE_NEW_MESSAGE_TEXT',
-};
-
-export const addPostActionCreator = () => ({type: actionTypes.ADD_NEW_POST});
-
-export const updateNewPostTextPostActionCreator = (payload: string) => ({
-    type: actionTypes.UPDATE_NEW_POST_TEXT,
-    newPostText: payload
-});
-
-export const sendMessageActionCreator = () => ({type: actionTypes.SEND_MESSAGE});
-
-export const updateNewMessageTextActionCreator = (payload: string) => ({
-    type: actionTypes.UPDATE_NEW_MESSAGE_TEXT,
-    payload: payload
-});
 
 export default store

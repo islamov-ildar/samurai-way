@@ -4,7 +4,17 @@ const postPageActionTypes = {
     UPDATE_NEW_POST_TEXT: 'UPDATE_NEW_POST_TEXT',
 };
 
-const postPageReducer = (state: any, action: any) => {
+const initialState = {
+    newPostText: 'it-kamasutra',
+    posts: [
+        {id: 1, message: 'Hi, how are you?', likesCount: 3},
+        {id: 2, message: 'It\'s my first post', likesCount: 6},
+        {id: 3, message: 'Yo', likesCount: 12},
+        {id: 4, message: 'KukarekuKukarekuKukareku123', likesCount: 51},
+    ],
+}
+
+const postPageReducer = (state: any = initialState, action: any) => {
     switch (action.type) {
         case postPageActionTypes.ADD_NEW_POST: {
             const newPost = {

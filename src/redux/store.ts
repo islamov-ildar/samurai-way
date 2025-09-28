@@ -31,8 +31,6 @@ export const store = {
         sidebar: {}
     },
     getState() {
-        // debugger
-
         return this._state
     },
     subscribe(observer: (state: typeof this._state) => void) {

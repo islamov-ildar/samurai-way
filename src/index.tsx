@@ -10,20 +10,14 @@ const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 
-const rerenderEntireTree = (state: any) => {
-    root.render(
-        <React.StrictMode>
-            <BrowserRouter>
-                <Provider store={store}>
-                    <App store={store}/>
-                </Provider>
-            </BrowserRouter>
-        </React.StrictMode>
-    );
-}
-
-rerenderEntireTree(store.getState());
-
-store.subscribe(() => rerenderEntireTree(store.getState()))
+root.render(
+    <React.StrictMode>
+        <BrowserRouter>
+            <Provider store={store}>
+                <App store={store}/>
+            </Provider>
+        </BrowserRouter>
+    </React.StrictMode>
+);
 
 reportWebVitals();

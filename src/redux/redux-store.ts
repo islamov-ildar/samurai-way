@@ -11,4 +11,7 @@ const reducers = combineReducers({
 
 const store = createStore(reducers);
 
+// @ts-ignore
+window.store = store;
+
 export default store;

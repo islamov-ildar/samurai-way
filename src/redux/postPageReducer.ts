@@ -22,22 +22,23 @@ const postPageReducer = (state: any = initialState, action: any) => {
                 message: state.newPostText,
                 likesCount: 0
             }
-            state.newPostText = '';
-            state.posts.push(newPost);
+            const stateCopy = {...state};
+            stateCopy.posts = [...state.posts];
+            stateCopy.posts.push(newPost);
+            stateCopy.newPostText = '';
 
             console.log('addNewPost', state);
-            break;
+            return stateCopy;
         }
         case postPageActionTypes.UPDATE_NEW_POST_TEXT: {
-            state.newPostText = action.newPostText;
-            console.log(state.newPostText);
-            break;
+            const stateCopy = {...state};
+            stateCopy.newPostText = action.newPostText;
+            console.log(stateCopy.newPostText);
+            return stateCopy;
         }
         default:
-            break;
+            return state;
     }
-
-    return state;
 }
 
 

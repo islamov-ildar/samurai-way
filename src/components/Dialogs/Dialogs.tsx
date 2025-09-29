@@ -4,10 +4,11 @@ import DialogItem from "./DialogItems/DialogsItem";
 import Message from "./Messages/Message";
 
 const Dialogs = (props: any) => {
-// debugger;
-    const dialogsElements = props.state.dialogs.map((d: any) => DialogItem(d));
+    // debugger;
+    console.log(props);
+    const dialogsElements = props.dialogsPage.dialogs.map((d: any) => DialogItem(d));
 
-    const messageElements = props.state.messages.map((m: any) => Message(m));
+    const messageElements = props.dialogsPage.messages.map((m: any) => Message(m));
 
     const inputHandle = (e: any) => {
         const newMessage = e.target.value;
@@ -28,7 +29,7 @@ const Dialogs = (props: any) => {
                     {messageElements}
                 </div>
                 <div className={s.flex}>
-                    <textarea onChange={inputHandle} value={props.state.newMessageText} name="newMessage" id="" cols={30} rows={1}></textarea>
+                    <textarea onChange={inputHandle} value={props.dialogsPage.newMessageText} name="newMessage" id="" cols={30} rows={1}></textarea>
                     <button onClick={sendMessage}>Send</button>
                 </div>
             </div>

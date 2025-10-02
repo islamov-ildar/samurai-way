@@ -21,4 +21,5 @@ const mapDispatchtoProps = (dispatch: any) => {
     }
 }
 
+// @ts-ignore
 export default connect(mapStateToProps, mapDispatchtoProps)(Users)

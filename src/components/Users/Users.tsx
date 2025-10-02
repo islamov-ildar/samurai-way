@@ -5,33 +5,15 @@ import userPhoto from "../../assets/userPlug.png";
 
 export class Users extends React.Component {
 
-    constructor(props: any) {
-        super(props);
-
-        // @ts-ignore
-        if (this.props.users.length === 0) {
-            const baseUrl = 'https://social-network.samuraijs.com/api/1.0/users'
-            axios.get(baseUrl).then((res: any) => {
-                console.log('axios.get users', res.data.items);
-                // @ts-ignore
-                this.props.setUsers(res.data.items)
-            })
-        }
+    componentDidMount() {
+        const baseUrl = 'https://social-network.samuraijs.com/api/1.0/users'
+        axios.get(baseUrl).then((res: any) => {
+            console.log('axios.get users', res.data.items);
+            // @ts-ignore
+            this.props.setUsers(res.data.items)
+        })
     }
 
-    // getUsers = () => {
-    //     // @ts-ignore
-    //     if (this.props.users.length === 0) {
-    //
-    //         const baseUrl = 'https://social-network.samuraijs.com/api/1.0/users'
-    //
-    //         axios.get(baseUrl).then((res: any) => {
-    //             console.log('axios.get users', res.data.items);
-    //             // @ts-ignore
-    //             this.props.setUsers(res.data.items)
-    //         })
-    //     }
-    // }
 
     render() {
         return <div>

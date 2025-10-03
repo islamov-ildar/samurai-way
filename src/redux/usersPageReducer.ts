@@ -3,6 +3,7 @@ const usersPageActionTypes = {
     FOLLOW: 'FOLLOW',
     UNFOLLOW: 'UNFOLLOW',
     SET_USERS: 'SET_USERS',
+    SET_CURRENT_PAGE: 'SET_CURRENT_PAGE',
 };
 
 interface User {
@@ -17,12 +18,18 @@ interface User {
     }
 }
 
-export interface userInitialState {
+export interface IUserInitialState {
     users: User[];
+    pageSize: number;
+    totalUsersCount: number;
+    currentPage: number;
 }
 
-const initialState: userInitialState = {
+const initialState: IUserInitialState = {
     users: [],
+    pageSize: 5,
+    totalUsersCount: 19,
+    currentPage: 2,
 }
 
 const usersPageReducer = (state: any = initialState, action: any) => {

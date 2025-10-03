@@ -2,7 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
 ## Available Scripts
+
+Run for use node version from .nvmrc:
+
+### `nvm use` 
 
 In the project directory, you can run:
 

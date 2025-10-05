@@ -12,9 +12,21 @@ export class Users extends React.Component<IUserInitialState> {
             console.log('axios.get users', res.data.items);
             // @ts-ignore
             this.props.setUsers(res.data.items)
+            // @ts-ignore
+            this.props.setTotalUsersCount(res.data.totalCount);
         })
     }
 
+    onPageChanged = (p: any) => {
+        // @ts-ignore
+        this.props.setCurrentPage(p);
+        const baseUrl = `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`;
+        axios.get(baseUrl).then((res: any) => {
+            console.log('axios.get users', res.data.items);
+            // @ts-ignore
+            this.props.setUsers(res.data.items)
+        })
+    }
 
     render() {
 
@@ -30,7 +42,7 @@ export class Users extends React.Component<IUserInitialState> {
             <div>
                 {
                     // @ts-ignore
-                    pages.map((p: any) => <span className={`${this.props.currentPage === p ? s.selected : ''} ${s.paginationBtn}` }>{p}</span>) }
+                    pages.map((p: any) => <span onClick={() => this.onPageChanged(p)} className={`${this.props.currentPage === p ? s.selected : ''} ${s.paginationBtn}` }>{p}</span>) }
             </div>
     {// @ts-ignore
         this.props.users.map((u: any) => <div key={u.id}>

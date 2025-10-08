@@ -24,6 +24,8 @@ export interface IUserInitialState {
     pageSize: number;
     totalUsersCount: number;
     currentPage: number;
+    follow?: () => {},
+    unfollow?: () => {},
 }
 
 const initialState: IUserInitialState = {

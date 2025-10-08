@@ -4,7 +4,8 @@ const usersPageActionTypes = {
     UNFOLLOW: 'UNFOLLOW',
     SET_USERS: 'SET_USERS',
     SET_CURRENT_PAGE: 'SET_CURRENT_PAGE',
-    SET_TOTAL_USERS_COUNT: 'SET_TOTAL_USERS_COUNT'
+    SET_TOTAL_USERS_COUNT: 'SET_TOTAL_USERS_COUNT',
+    TOGGLE_IS_FETCHING: 'TOGGLE_IS_FETCHING',
 };
 
 interface User {
@@ -26,6 +27,8 @@ export interface IUserInitialState {
     currentPage: number;
     follow?: () => {},
     unfollow?: () => {},
+    toggleIsFetching?: () => {},
+    isFetching: boolean;
 }
 
 const initialState: IUserInitialState = {
@@ -33,6 +36,7 @@ const initialState: IUserInitialState = {
     pageSize: 50,
     totalUsersCount: 0,
     currentPage: 1,
+    isFetching: false,
 }
 
 const usersPageReducer = (state: any = initialState, action: any) => {
@@ -52,6 +56,9 @@ const usersPageReducer = (state: any = initialState, action: any) => {
         case usersPageActionTypes.SET_TOTAL_USERS_COUNT: {
             return {...state, totalUsersCount: action.totalUsersCount};
         }
+        case usersPageActionTypes.TOGGLE_IS_FETCHING: {
+            return {...state, isFetching: action.isFetching};
+        }
 
         default:
             return state;
@@ -67,5 +74,7 @@ export const setUsersAC = (users: User[]) => ({type: usersPageActionTypes.SET_US
 export const setCurrentPageAC = (currentPage: number) => ({type: usersPageActionTypes.SET_CURRENT_PAGE, currentPage});
 
 export const setTotalUsersCountAC = (totalUsersCount: number) => ({type: usersPageActionTypes.SET_TOTAL_USERS_COUNT, totalUsersCount});
+
+export const toggleIsFetchingAC = (isFetching: boolean) => ({type: usersPageActionTypes.TOGGLE_IS_FETCHING, isFetching});
 
 export default usersPageReducer;

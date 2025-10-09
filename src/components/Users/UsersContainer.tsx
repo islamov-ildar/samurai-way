@@ -1,12 +1,12 @@
 import React from 'react'
 import {connect} from "react-redux";
 import {
-    followAC,
-    setCurrentPageAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    toggleIsFetchingAC,
-    unfollowAC
+    follow,
+    setCurrentPage,
+    setTotalUsersCount,
+    setUsers,
+    toggleIsFetching,
+    unfollow
 } from "../../redux/usersPageReducer";
 import axios from "axios";
 import {IUserInitialState} from "../../redux/usersPageReducer";
@@ -47,7 +47,7 @@ export class UsersContainer extends React.Component<IUserInitialState> {
 
     render() {
         return <>
-            {this.props.isFetching ? <Preloader /> : null}
+            {this.props.isFetching ? <Preloader/> : null}
             <Users
                 totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
@@ -76,25 +76,32 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
     return {
         follow: (userId: number) => {
-            dispatch(followAC(userId));
+            dispatch(follow(userId));
         },
         unfollow: (userId: number) => {
-            dispatch(unfollowAC(userId));
+            dispatch(unfollow(userId));
         },
         setUsers: (users: any) => {
-            dispatch(setUsersAC(users));
+            dispatch(setUsers(users));
         },
         setCurrentPage: (currentPage: number) => {
-            dispatch(setCurrentPageAC(currentPage));
+            dispatch(setCurrentPage(currentPage));
         },
         setTotalUsersCount: (totalUsersCount: number) => {
-            dispatch(setTotalUsersCountAC(totalUsersCount));
+            dispatch(setTotalUsersCount(totalUsersCount));
         },
         toggleIsFetching: (isFetching: boolean) => {
-            dispatch(toggleIsFetchingAC(isFetching));
+            dispatch(toggleIsFetching(isFetching));
         }
     }
 }
 
+export default connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    toggleIsFetching
 // @ts-ignore
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+})(UsersContainer)

@@ -2,6 +2,7 @@
 const postPageActionTypes = {
     ADD_NEW_POST: 'ADD_NEW_POST',
     UPDATE_NEW_POST_TEXT: 'UPDATE_NEW_POST_TEXT',
+    SET_USER_PROFILE: 'SET_USER_PROFILE',
 };
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
         {id: 3, message: 'Yo', likesCount: 12},
         {id: 4, message: 'KukarekuKukarekuKukareku123', likesCount: 51},
     ],
+    profile: null
 }
 
 const postPageReducer = (state: any = initialState, action: any) => {
@@ -27,6 +29,9 @@ const postPageReducer = (state: any = initialState, action: any) => {
         case postPageActionTypes.UPDATE_NEW_POST_TEXT: {
             return {...state, newPostText: action.newPostText};
         }
+        case postPageActionTypes.SET_USER_PROFILE: {
+            return {...state, profile: action.profile};
+        }
         default:
             return state;
     }
@@ -34,6 +39,8 @@ const postPageReducer = (state: any = initialState, action: any) => {
 
 
 export const addPostActionCreator = () => ({type: postPageActionTypes.ADD_NEW_POST});
+
+export const setUserProfile = (profile: any) => ({type: postPageActionTypes.SET_USER_PROFILE, profile});
 
 export const updateNewPostTextPostActionCreator = (payload: string) => ({
     type: postPageActionTypes.UPDATE_NEW_POST_TEXT,

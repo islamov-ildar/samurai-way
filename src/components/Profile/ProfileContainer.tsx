@@ -4,6 +4,7 @@ import {Profile} from "./Profile";
 import axios from "axios";
 import {connect} from "react-redux";
 import {setUserProfile} from "../../redux/postPageReducer";
+import {useLocation, useNavigate, useParams} from "react-router";
 
 class ProfileContainer extends React.Component<any, any> {
 
@@ -35,6 +36,22 @@ const mapStateToProps = (state: any) => ({
     profile: state.postPage.profile,
 })
 
-export default connect(mapStateToProps, {
-    setUserProfile
-})(ProfileContainer);
+withRouter(ProfileContainer);
+
+function withRouter(Component: any) {
+    function ComponentWithRouterProp(props: any) {
+        let location = useLocation();
+        let navigate = useNavigate();
+        let params = useParams();
+        return (
+            <Component
+                {...props}
+                router={{ location, navigate, params }}
+            />
+        );
+    }
+
+    return ComponentWithRouterProp;
+}
+
+export default connect(mapStateToProps, {setUserProfile})(ProfileContainer);

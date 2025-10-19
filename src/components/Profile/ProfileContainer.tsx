@@ -9,24 +9,22 @@ import {useLocation, useNavigate, useParams} from "react-router";
 class ProfileContainer extends React.Component<any, any> {
 
     componentDidMount() {
-        const baseUrl = `https://social-network.samuraijs.com/api/1.0/profile/2`;
+        let userId = this.props.router.params.userId;
+        userId = userId ? userId : 2;
 
+        const baseUrl = `https://social-network.samuraijs.com/api/1.0/profile/${userId}`;
         axios.get(baseUrl).then((res: any) => {
-            // @ts-ignore
-            // this.props.toggleIsFetching(false);
             console.log('axios.get ProfileContainer', res.data);
-            // @ts-ignore
-            // this.props.setProfile(res.data)
-            // @ts-ignore
-            // this.props.setTotalUsersCount(res.data.totalCount);
             this.props.setUserProfile(res.data);
         })
+
+
     }
 
     render() {
         return (
             <main className={classes.content}>
-                <Profile {...this.props} profile={this.props.profile} />
+                <Profile {...this.props} profile={this.props.profile}/>
             </main>
         )
     }
@@ -36,8 +34,6 @@ const mapStateToProps = (state: any) => ({
     profile: state.postPage.profile,
 })
 
-withRouter(ProfileContainer);
-
 function withRouter(Component: any) {
     function ComponentWithRouterProp(props: any) {
         let location = useLocation();
@@ -46,7 +42,7 @@ function withRouter(Component: any) {
         return (
             <Component
                 {...props}
-                router={{ location, navigate, params }}
+                router={{location, navigate, params}}
             />
         );
     }
@@ -54,4 +50,6 @@ function withRouter(Component: any) {
     return ComponentWithRouterProp;
 }
 
-export default connect(mapStateToProps, {setUserProfile})(ProfileContainer);
+const WithUrlDataContainerComponent = withRouter(ProfileContainer);
+
+export default connect(mapStateToProps, {setUserProfile})(WithUrlDataContainerComponent);

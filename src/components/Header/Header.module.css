@@ -2,3 +2,11 @@
     grid-area: header;
     background-color: #c5acd3;
 }
+.loginBlock {
+    float: right;
+}
+.headerInner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

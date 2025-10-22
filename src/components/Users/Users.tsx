@@ -3,6 +3,7 @@ import userPhoto from "../../assets/userPlug.png";
 import s from './users.module.css'
 import {NavLink} from "react-router";
 import axios from "axios";
+import {usersAPI} from "../../api/api";
 
 let Users = (props: any) => {
     const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -29,28 +30,18 @@ let Users = (props: any) => {
             <div>{u.followed ?
                 // @ts-ignore
                 <button onClick={() => {
-                    const baseUrl = `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`;
-                    axios.delete(baseUrl, {withCredentials: true, headers: {'API-KEY':'7643462e-f1ca-4ac7-ab74-2b96553fe0b2'}}).then((res: any) => {
-                        // @ts-ignore
-                        // this.props.toggleIsFetching(false);
+                    usersAPI.unFollow(u.id).then((res: any) => {
                         console.log('axios.delete unfollow', res);
-                        // @ts-ignore
-                        // this.props.setUsers(res.data.items)
+                        props.unfollow(u.id)
                     })
 
-                    props.unfollow(u.id)
                 }}>Unfollow</button> :
                 // @ts-ignore
                 <button onClick={() => {
-                    const baseUrl = `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`;
-                    axios.post(baseUrl, {}, {withCredentials: true, headers: {'API-KEY':'7643462e-f1ca-4ac7-ab74-2b96553fe0b2'}}).then((res: any) => {
-                        // @ts-ignore
-                        // this.props.toggleIsFetching(false);
+                    usersAPI.follow(u.id).then((res: any) => {
                         console.log('axios.post follow', res);
-                        // @ts-ignore
-                        // this.props.setUsers(res.data.items)
+                        props.follow(u.id)
                     })
-                    props.follow(u.id)
                 }
                 }>Follow</button>}
             </div>

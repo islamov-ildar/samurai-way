@@ -12,21 +12,22 @@ import axios from "axios";
 import {IUserInitialState} from "../../redux/usersPageReducer";
 import Users from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
+import {usersAPI} from "../../api/api";
 
 export class UsersContainer extends React.Component<IUserInitialState> {
 
     componentDidMount() {
-        const baseUrl = `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`;
         // @ts-ignore
         this.props.toggleIsFetching(true);
-        axios.get(baseUrl, {withCredentials: true}).then((res: any) => {
+
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then((res: any) => {
             // @ts-ignore
             this.props.toggleIsFetching(false);
-            console.log('axios.get users', res.data.items);
+            console.log('axios.get users', res);
             // @ts-ignore
-            this.props.setUsers(res.data.items)
+            this.props.setUsers(res.items)
             // @ts-ignore
-            this.props.setTotalUsersCount(res.data.totalCount);
+            this.props.setTotalUsersCount(res.totalCount);
         })
     }
 
@@ -34,14 +35,14 @@ export class UsersContainer extends React.Component<IUserInitialState> {
         // @ts-ignore
         this.props.setCurrentPage(p);
         // @ts-ignore
+
         this.props.toggleIsFetching(true);
-        const baseUrl = `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`;
-        axios.get(baseUrl, {withCredentials: true}).then((res: any) => {
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then((res: any) => {
             // @ts-ignore
             this.props.toggleIsFetching(false);
-            console.log('axios.get users', res.data.items);
+            console.log('axios.get users', res);
             // @ts-ignore
-            this.props.setUsers(res.data.items)
+            this.props.setUsers(res.items)
         })
     }
 

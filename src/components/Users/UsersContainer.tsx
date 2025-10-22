@@ -19,7 +19,7 @@ export class UsersContainer extends React.Component<IUserInitialState> {
         const baseUrl = `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`;
         // @ts-ignore
         this.props.toggleIsFetching(true);
-        axios.get(baseUrl).then((res: any) => {
+        axios.get(baseUrl, {withCredentials: true}).then((res: any) => {
             // @ts-ignore
             this.props.toggleIsFetching(false);
             console.log('axios.get users', res.data.items);
@@ -36,7 +36,7 @@ export class UsersContainer extends React.Component<IUserInitialState> {
         // @ts-ignore
         this.props.toggleIsFetching(true);
         const baseUrl = `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`;
-        axios.get(baseUrl).then((res: any) => {
+        axios.get(baseUrl, {withCredentials: true}).then((res: any) => {
             // @ts-ignore
             this.props.toggleIsFetching(false);
             console.log('axios.get users', res.data.items);
@@ -73,28 +73,28 @@ const mapStateToProps = (state: any) => {
     };
 }
 
-const mapDispatchToProps = (dispatch: any) => {
-    return {
-        follow: (userId: number) => {
-            dispatch(follow(userId));
-        },
-        unfollow: (userId: number) => {
-            dispatch(unfollow(userId));
-        },
-        setUsers: (users: any) => {
-            dispatch(setUsers(users));
-        },
-        setCurrentPage: (currentPage: number) => {
-            dispatch(setCurrentPage(currentPage));
-        },
-        setTotalUsersCount: (totalUsersCount: number) => {
-            dispatch(setTotalUsersCount(totalUsersCount));
-        },
-        toggleIsFetching: (isFetching: boolean) => {
-            dispatch(toggleIsFetching(isFetching));
-        }
-    }
-}
+// const mapDispatchToProps = (dispatch: any) => {
+//     return {
+//         follow: (userId: number) => {
+//             dispatch(follow(userId));
+//         },
+//         unfollow: (userId: number) => {
+//             dispatch(unfollow(userId));
+//         },
+//         setUsers: (users: any) => {
+//             dispatch(setUsers(users));
+//         },
+//         setCurrentPage: (currentPage: number) => {
+//             dispatch(setCurrentPage(currentPage));
+//         },
+//         setTotalUsersCount: (totalUsersCount: number) => {
+//             dispatch(setTotalUsersCount(totalUsersCount));
+//         },
+//         toggleIsFetching: (isFetching: boolean) => {
+//             dispatch(toggleIsFetching(isFetching));
+//         }
+//     }
+// }
 
 export default connect(mapStateToProps, {
     follow,

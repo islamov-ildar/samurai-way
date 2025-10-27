@@ -1,3 +1,4 @@
+import {usersAPI} from "../api/api";
 
 const usersPageActionTypes = {
     FOLLOW: 'FOLLOW',
@@ -32,6 +33,7 @@ export interface IUserInitialState {
     isFetching: boolean;
     followingInProgress: [];
     toggleFollowingProgress?:  () => {},
+    getUsers?: () => {},
 }
 
 const initialState: IUserInitialState = {
@@ -74,9 +76,43 @@ const usersPageReducer = (state: any = initialState, action: any) => {
     }
 }
 
-export const follow = (userId: number) => ({type: usersPageActionTypes.FOLLOW, userId});
+export const getUsers = (currentPage: any, pageSize: any) => {
+    return (dispatch: any) => {
+        dispatch(toggleIsFetching(true));
 
-export const unfollow = (userId: number) => ({type: usersPageActionTypes.UNFOLLOW, userId});
+        usersAPI.getUsers(currentPage, pageSize).then((res: any) => {
+            console.log('axios.get users', res);
+            dispatch(toggleIsFetching(false));
+            dispatch(setUsers(res.items));
+            dispatch(setTotalUsersCount(res.totalCount));
+        })
+    }
+}
+
+export const follow = (id: any) => {
+    return (dispatch: any) => {
+        dispatch(toggleFollowingProgress(true, id));
+        usersAPI.follow(id).then((res: any) => {
+            console.log('axios.post follow', res);
+            dispatch(toggleFollowingProgress(false, id));
+            dispatch(followSuccess(id));
+        })
+    }
+}
+export const unfollow = (id: any) => {
+    return (dispatch: any) => {
+        dispatch(toggleFollowingProgress(true, id));
+        usersAPI.unFollow(id).then((res: any) => {
+            console.log('axios.post follow', res);
+            dispatch(toggleFollowingProgress(false, id));
+            dispatch(unfollowSuccess(id));
+        })
+    }
+}
+
+export const followSuccess = (userId: number) => ({type: usersPageActionTypes.FOLLOW, userId});
+
+export const unfollowSuccess = (userId: number) => ({type: usersPageActionTypes.UNFOLLOW, userId});
 
 export const setUsers = (users: User[]) => ({type: usersPageActionTypes.SET_USERS, users});
 

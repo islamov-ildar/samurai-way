@@ -1,48 +1,28 @@
 import React from 'react'
 import {connect} from "react-redux";
 import {
-    follow,
+    follow, getUsers,
     setCurrentPage,
-    setTotalUsersCount,
-    setUsers, toggleFollowingProgress,
-    toggleIsFetching,
+    toggleFollowingProgress,
     unfollow
 } from "../../redux/usersPageReducer";
 import {IUserInitialState} from "../../redux/usersPageReducer";
 import Users from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
-import {usersAPI} from "../../api/api";
 
 export class UsersContainer extends React.Component<IUserInitialState> {
 
     componentDidMount() {
         // @ts-ignore
-        this.props.toggleIsFetching(true);
-
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then((res: any) => {
-            // @ts-ignore
-            this.props.toggleIsFetching(false);
-            console.log('axios.get users', res);
-            // @ts-ignore
-            this.props.setUsers(res.items)
-            // @ts-ignore
-            this.props.setTotalUsersCount(res.totalCount);
-        })
+        this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChanged = (p: any) => {
         // @ts-ignore
         this.props.setCurrentPage(p);
         // @ts-ignore
+        this.props.getUsers(p, this.props.pageSize)
 
-        this.props.toggleIsFetching(true);
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then((res: any) => {
-            // @ts-ignore
-            this.props.toggleIsFetching(false);
-            console.log('axios.get users', res);
-            // @ts-ignore
-            this.props.setUsers(res.items)
-        })
     }
 
     render() {
@@ -76,36 +56,11 @@ const mapStateToProps = (state: any) => {
     };
 }
 
-// const mapDispatchToProps = (dispatch: any) => {
-//     return {
-//         follow: (userId: number) => {
-//             dispatch(follow(userId));
-//         },
-//         unfollow: (userId: number) => {
-//             dispatch(unfollow(userId));
-//         },
-//         setUsers: (users: any) => {
-//             dispatch(setUsers(users));
-//         },
-//         setCurrentPage: (currentPage: number) => {
-//             dispatch(setCurrentPage(currentPage));
-//         },
-//         setTotalUsersCount: (totalUsersCount: number) => {
-//             dispatch(setTotalUsersCount(totalUsersCount));
-//         },
-//         toggleIsFetching: (isFetching: boolean) => {
-//             dispatch(toggleIsFetching(isFetching));
-//         }
-//     }
-// }
-
 export default connect(mapStateToProps, {
     follow,
     unfollow,
-    setUsers,
     setCurrentPage,
-    setTotalUsersCount,
-    toggleIsFetching,
     toggleFollowingProgress,
-// @ts-ignore
+    getUsers
+    //@ts-ignore
 })(UsersContainer)

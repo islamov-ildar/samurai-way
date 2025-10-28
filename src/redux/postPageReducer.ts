@@ -1,3 +1,4 @@
+import {usersAPI} from "../api/api";
 
 const postPageActionTypes = {
     ADD_NEW_POST: 'ADD_NEW_POST',
@@ -41,6 +42,8 @@ const postPageReducer = (state: any = initialState, action: any) => {
 export const addPostActionCreator = () => ({type: postPageActionTypes.ADD_NEW_POST});
 
 export const setUserProfile = (profile: any) => ({type: postPageActionTypes.SET_USER_PROFILE, profile});
+
+export const getUserProfile = (userId: any) => (dispatch: any) => {usersAPI.getProfile(userId).then((res: any) => {dispatch(setUserProfile(res.data))})};
 
 export const updateNewPostTextPostActionCreator = (payload: string) => ({
     type: postPageActionTypes.UPDATE_NEW_POST_TEXT,

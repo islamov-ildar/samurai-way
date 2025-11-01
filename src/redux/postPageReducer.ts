@@ -16,7 +16,7 @@ const initialState = {
         {id: 4, message: 'KukarekuKukarekuKukareku123', likesCount: 51},
     ],
     profile: null,
-    status: '123'
+    status: ''
 }
 
 const postPageReducer = (state: any = initialState, action: any) => {

@@ -4,7 +4,7 @@ import ProfileStatus from "./ProfileStatus";
 // import classes from "./ProfileInfo.module.css";
 
 export const ProfileInfo = (props: any) => {
-    console.log(props.profile)
+    console.log('getUserStatus props', props)
     if (props.profile === null) {
         console.log('ProfileInfo 1');
         return (<Preloader/>)
@@ -19,7 +19,7 @@ export const ProfileInfo = (props: any) => {
                 {props.profile.photos.large && <img src={props.profile.photos.large} alt="ava"/>}
             </div>
             <div>
-                <ProfileStatus status="hello!!!" />
+                <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus} />
             </div>
             <div>
                 {props.profile.fullName}

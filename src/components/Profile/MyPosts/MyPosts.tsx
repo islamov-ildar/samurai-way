@@ -1,36 +1,38 @@
 import React from "react";
 import s from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
+import {Field, reduxForm} from "redux-form";
 
 export const MyPosts = (props: any) => {
     console.log('MyPosts', props);
     const posts = props.posts.map((p: {id:number, message: any; likesCount: any; }) =>
         <Post message={p.message} likesCount={p.likesCount} key={p.id}/>);
 
-    const text: React.RefObject<HTMLTextAreaElement | null> = React.createRef();
-
-    const addPost = () => {
-        props.addPost();
-     }
-
-    const handleOnchange = () => {
-        const newPost = text.current?.value;
-        if(newPost) props.updateNewPostText(newPost);
+    const onSubmit = (formData: any) => {
+        props.addPost(formData.postText);
     }
 
     return (
         <main className={s.content}>
             <h3>MyPosts</h3>
-            <div>
-                <textarea ref={text} name="postText" id="" cols={30} rows={5} value={props.newPostText} onChange={handleOnchange} />
-                <div>
-                    <button onClick={addPost}>Save</button>
-                    <button>Remove</button>
-                </div>
-            </div>
+            <AddPostReduxForm onSubmit={onSubmit} />
             <div className={s.posts}>
                 {posts}
             </div>
         </main>
     )
 }
+
+const AddPost = (props: any) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <Field name="postText" type="text" component="textarea" />
+            <div>
+                <button>Save</button>
+                <button>Remove</button>
+            </div>
+        </form>
+    )
+}
+
+const AddPostReduxForm = reduxForm({form: 'addPost'})(AddPost) as any;

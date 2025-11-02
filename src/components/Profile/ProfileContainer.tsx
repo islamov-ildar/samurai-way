@@ -3,7 +3,7 @@ import classes from "./Profile.module.css";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
 import {getUserProfile, getUserStatus, updateUserStatus} from "../../redux/postPageReducer";
-import {Navigate, useLocation, useNavigate, useParams} from "react-router";
+import {useLocation, useNavigate, useParams} from "react-router";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 

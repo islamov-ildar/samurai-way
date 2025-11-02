@@ -2,7 +2,6 @@ import {profileAPI, usersAPI} from "../api/api";
 
 const postPageActionTypes = {
     ADD_NEW_POST: 'ADD_NEW_POST',
-    UPDATE_NEW_POST_TEXT: 'UPDATE_NEW_POST_TEXT',
     SET_USER_PROFILE: 'SET_USER_PROFILE',
     SET_STATUS: 'SET_STATUS',
 };
@@ -24,13 +23,10 @@ const postPageReducer = (state: any = initialState, action: any) => {
         case postPageActionTypes.ADD_NEW_POST: {
             const newPost = {
                 id: state.posts.length + 1,
-                message: state.newPostText,
+                message: action.newPostText,
                 likesCount: 0
             }
-            return {...state, posts: [...state.posts, newPost], newPostText: ''};
-        }
-        case postPageActionTypes.UPDATE_NEW_POST_TEXT: {
-            return {...state, newPostText: action.newPostText};
+            return {...state, posts: [...state.posts, newPost]};
         }
         case postPageActionTypes.SET_USER_PROFILE: {
             return {...state, profile: action.profile};
@@ -44,7 +40,7 @@ const postPageReducer = (state: any = initialState, action: any) => {
 }
 
 
-export const addPostActionCreator = () => ({type: postPageActionTypes.ADD_NEW_POST});
+export const addPostActionCreator = (payload: string) => ({type: postPageActionTypes.ADD_NEW_POST, newPostText: payload});
 
 export const setUserProfile = (profile: any) => ({type: postPageActionTypes.SET_USER_PROFILE, profile});
 
@@ -53,11 +49,6 @@ export const getUserProfile = (userId: any) => (dispatch: any) => {
         dispatch(setUserProfile(res.data))
     })
 };
-
-export const updateNewPostTextPostActionCreator = (payload: string) => ({
-    type: postPageActionTypes.UPDATE_NEW_POST_TEXT,
-    newPostText: payload
-});
 
 export const getUserStatus = (payload: string) => (dispatch: any) => {
     profileAPI.getStatus(payload).then((res: any) => {

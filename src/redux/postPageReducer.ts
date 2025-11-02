@@ -68,7 +68,7 @@ export const getUserStatus = (payload: string) => (dispatch: any) => {
 
 export const updateUserStatus = (payload: string) => (dispatch: any) => {
     profileAPI.updateStatus(payload).then((res: any) => {
-        console.log('getUserStatus', res)
+        console.log('updateUserStatus', res)
         if (res.data.resultCode === 0) {
             dispatch(setStatus(payload))
         }

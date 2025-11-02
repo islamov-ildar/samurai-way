@@ -8,12 +8,14 @@ class ProfileStatus extends React.Component<any, any> {
     };
 
     onStatusChange = (e: any) => {
+        console.log('onStatusChange', e)
+        console.log('onStatusChange', e.currentTarget.value)
         this.setState({status: e.currentTarget.value});
     }
 
     componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any) {
         console.log('componentDidUpdate', prevProps, prevState, snapshot);
-        if (prevProps.status !== this.state.status) {
+        if (prevProps.status !== this.props.status) {
             this.setState({status: this.props.status});
         }
     }
@@ -23,6 +25,7 @@ class ProfileStatus extends React.Component<any, any> {
      }
 
     deActivateEditMode = () => {
+        console.log('deActivateEditMode', this.state.status)
         this.props.updateUserStatus(this.state.status);
         this.setState({editMode: false});
      }

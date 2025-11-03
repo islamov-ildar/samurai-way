@@ -4,6 +4,8 @@ import DialogItem from "./DialogItems/DialogsItem";
 import Message from "./Messages/Message";
 import {Navigate} from "react-router";
 import {Field, reduxForm} from "redux-form";
+import {TextArea} from "../common/FormsControls/FormsControls";
+import {maxLength, required} from "../../utils/validators/validators";
 
 const Dialogs = (props: any) => {
 
@@ -37,7 +39,7 @@ const Dialogs = (props: any) => {
 const AddMessageForm = (props: any) => {
     return (
         <form onSubmit={props.handleSubmit} className={s.flex}>
-            <Field type="text" name={'newMessageBody'} component="textarea" placeholder="Enter your message text" />
+            <Field type="text" name={'newMessageBody'} component={TextArea} validate={[required, maxLength(9)]} placeholder="Enter your message text" />
             <button>Send</button>
         </form>
     )

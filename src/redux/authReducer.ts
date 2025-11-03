@@ -34,13 +34,26 @@ const setAuthUserData = (userId: any, email: any, login: any, isAuth: boolean) =
 
 export const getAuthUserData = () => (dispatch: any) => {
     authAPI.authMe().then((res: any) => {
-        console.log('getAuthUserData 123', res.data);
         if (res.data.resultCode === 0) {
-            console.log('getAuthUserData 456', res.data);
             const {id, email, login} = res.data.data;
             dispatch(setAuthUserData(id, email, login, true));
         } else {
-            console.log('getAuthUserData 789', res.data);
+            dispatch(setAuthUserData(null, null, null, false));
+        }
+    })
+};
+
+export const login = (email: any, password: any, rememberMe: any) => (dispatch: any) => {
+    authAPI.authLogin(email, password, rememberMe).then((res: any) => {
+        if (res.data.resultCode === 0) {
+            dispatch(getAuthUserData());
+        }
+    })
+};
+
+export const logout = () => (dispatch: any) => {
+    authAPI.authLogout().then((res: any) => {
+        if (res.data.resultCode === 0) {
             dispatch(setAuthUserData(null, null, null, false));
         }
     })

@@ -10,6 +10,12 @@ import {IUserInitialState} from "../../redux/usersPageReducer";
 import Users from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
 import {compose} from "redux";
+import {
+    getCurrentPageSelector, getFollowingInProgressSelector, getIsFetchingSelector,
+    getPageSizeSelector,
+    getTotalUsersCountSelector,
+    getUsersSelector
+} from "../../redux/users-selectors";
 
 export class UsersContainer extends React.Component<IUserInitialState> {
 
@@ -19,8 +25,6 @@ export class UsersContainer extends React.Component<IUserInitialState> {
     }
 
     onPageChanged = (p: any) => {
-        // @ts-ignore
-        this.props.setCurrentPage(p);
         // @ts-ignore
         this.props.getUsers(p, this.props.pageSize)
 
@@ -46,16 +50,19 @@ export class UsersContainer extends React.Component<IUserInitialState> {
     }
 }
 
+
 const mapStateToProps = (state: any) => {
     return {
-        users: state.usersPage.users,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        pageSize: state.usersPage.pageSize,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress,
+        users: getUsersSelector(state),
+        pageSize: getPageSizeSelector(state),
+        totalUsersCount: getTotalUsersCountSelector(state),
+        currentPage: getCurrentPageSelector(state),
+        isFetching: getIsFetchingSelector(state),
+        followingInProgress: getFollowingInProgressSelector(state),
     };
 }
+
+
 
 export default compose(connect(mapStateToProps, {
     follow,

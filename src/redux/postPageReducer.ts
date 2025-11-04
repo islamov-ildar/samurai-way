@@ -52,14 +52,12 @@ export const getUserProfile = (userId: any) => (dispatch: any) => {
 
 export const getUserStatus = (payload: string) => (dispatch: any) => {
     profileAPI.getStatus(payload).then((res: any) => {
-        console.log('getUserStatus', res)
         dispatch(setStatus(res.data))
     })
 };
 
 export const updateUserStatus = (payload: string) => (dispatch: any) => {
     profileAPI.updateStatus(payload).then((res: any) => {
-        console.log('updateUserStatus', res)
         if (res.data.resultCode === 0) {
             dispatch(setStatus(payload))
         }

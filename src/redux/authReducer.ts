@@ -18,7 +18,7 @@ const initialState: IState = {
     userId: null,
     email: null,
     login: null,
-    isAuth: true,
+    isAuth: false,
 }
 
 const authReducer = (state: any = initialState, action: any) => {
@@ -34,7 +34,7 @@ const authReducer = (state: any = initialState, action: any) => {
 const setAuthUserData = (userId: any, email: any, login: any, isAuth: boolean) => ({type: authActionTypes.SET_USER_DATA, data: {userId, email, login, isAuth}});
 
 export const getAuthUserData = () => (dispatch: any) => {
-    authAPI.authMe().then((res: any) => {
+    return authAPI.authMe().then((res: any) => {
         if (res.data.resultCode === 0) {
             const {id, email, login} = res.data.data;
             dispatch(setAuthUserData(id, email, login, true));

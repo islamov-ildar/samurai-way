@@ -1,15 +1,11 @@
 import React from "react";
 import {Preloader} from "../../common/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
-// import classes from "./ProfileInfo.module.css";
 
 export const ProfileInfo = (props: any) => {
-    console.log('getUserStatus props', props)
     if (props.profile === null) {
-        console.log('ProfileInfo 1');
         return (<Preloader/>)
     }
-    console.log('ProfileInfo 2')
     return (
         <div>
             <img

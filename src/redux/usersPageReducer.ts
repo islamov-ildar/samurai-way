@@ -81,7 +81,6 @@ export const getUsers = (currentPage: any, pageSize: any) => {
         dispatch(toggleIsFetching(true));
 
         usersAPI.getUsers(currentPage, pageSize).then((res: any) => {
-            console.log('axios.get users', res);
             dispatch(toggleIsFetching(false));
             dispatch(setUsers(res.items));
             dispatch(setTotalUsersCount(res.totalCount));
@@ -93,7 +92,6 @@ export const follow = (id: any) => {
     return (dispatch: any) => {
         dispatch(toggleFollowingProgress(true, id));
         usersAPI.follow(id).then((res: any) => {
-            console.log('axios.post follow', res);
             dispatch(toggleFollowingProgress(false, id));
             dispatch(followSuccess(id));
         })
@@ -103,7 +101,6 @@ export const unfollow = (id: any) => {
     return (dispatch: any) => {
         dispatch(toggleFollowingProgress(true, id));
         usersAPI.unFollow(id).then((res: any) => {
-            console.log('axios.post follow', res);
             dispatch(toggleFollowingProgress(false, id));
             dispatch(unfollowSuccess(id));
         })

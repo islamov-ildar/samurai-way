@@ -17,7 +17,6 @@ const Dialogs = (props: any) => {
 
 
     const onSubmit = (formData: any) => {
-        console.log('Form submitted:', formData);
         props.sendMessage(formData.newMessageBody);
     }
 

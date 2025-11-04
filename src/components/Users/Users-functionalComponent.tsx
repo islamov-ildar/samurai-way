@@ -4,7 +4,6 @@ import axios from "axios";
 import userPhoto from "../../assets/userPlug.png";
 
 export const UsersFunctionalComponent = (props: any) => {
-    console.log('UsersFunctionalComponent', props);
 
     const getUsers = () => {
         if (props.users.length === 0) {
@@ -12,15 +11,8 @@ export const UsersFunctionalComponent = (props: any) => {
             const baseUrl = 'https://social-network.samuraijs.com/api/1.0/users'
 
             axios.get(baseUrl).then((res: any) => {
-                console.log('axios.get users', res.data.items);
                 props.setUsers(res.data.items)
             })
-            // props.setUsers([
-            //     {id: 1, photoUrl: '', followed: true, fullName: 'Dart Vader', status: 'Luke, I am your father', location: {city: 'Nabu Coda', country: 'Alderaan'}},
-            //     {id: 2, photoUrl: '', followed: false, fullName: 'Mace Windu', status: 'I have dismantled and destroyed over 100,000 of you Type One battle droids.', location: {city: 'Javin', country: 'Four'}},
-            //     {id: 3, photoUrl: '', followed: true, fullName: 'Obi Van', status: 'Only a Sith deals in absolutes.', location: {city: 'Coruscant', country: 'City'}},
-            //     {id: 4, photoUrl: '', followed: false, fullName: 'Luke Skywalker', status: 'Do or do not. There is no try.', location: {city: 'Stewjon', country: 'Town'}},
-            // ]);
         }
     }
 

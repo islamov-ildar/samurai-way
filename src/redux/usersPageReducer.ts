@@ -10,7 +10,7 @@ const usersPageActionTypes = {
     TOGGLE_IS_FOLLOWING_PROGRESS: 'TOGGLE_IS_FOLLOWING_PROGRESS',
 };
 
-interface User {
+export interface User {
     id: number;
     followed: boolean;
     photoUrl: string;

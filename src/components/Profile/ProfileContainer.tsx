@@ -8,6 +8,7 @@ import {useLocation, useNavigate, useParams} from "react-router";
 class ProfileContainer extends React.Component<any, any> {
 
     componentDidMount() {
+        console.log('ProfileContainer', this.props);
         let userId = this.props.router.params.userId;
         if(!userId) {
             userId = this.props.authorizedUserId;

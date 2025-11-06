@@ -1,46 +1,42 @@
-import React from 'react'
+import React, {useState} from 'react'
 
-class ProfileStatusWithHooks extends React.Component<any, any> {
+const ProfileStatusWithHooks = (props: any) => {
 
-    state = {
-        editMode: false,
-        status: this.props.status,
-    };
 
-    onStatusChange = (e: any) => {
-        this.setState({status: e.currentTarget.value});
+    // let stateWithSetState = useState(false);
+    //
+    // let editMode = stateWithSetState[0];
+    // let setEditMode = stateWithSetState[1];
+
+    let [editMode, setEditMode] = useState(false);
+    let [status, setStatus] = useState(props.status);
+
+    const activateMode = () => {setEditMode(true)}
+    const deActivateMode = () => {
+        setEditMode(false)
+        props.updateUserStatus(status);
     }
 
-    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any) {
-       if (prevProps.status !== this.props.status) {
-            this.setState({status: this.props.status});
-        }
+    const onStatusChange = (e: any) => {
+        setStatus(e.currentTarget.value);
     }
 
-    activateEditMode = () => {
-         this.setState({editMode: true});
-     }
+    return (
+        <div>
+            <span>Status:</span>
+            {!editMode &&
+                <div>
+                    <span onDoubleClick={activateMode}>{status || '-----'}</span>
+                </div>
+            }
+            {editMode &&
+                <div>
+                    <input onChange={onStatusChange} autoFocus={true} onBlur={deActivateMode} value={status} />
+                </div>}
 
-    deActivateEditMode = () => {
-        this.props.updateUserStatus(this.state.status);
-        this.setState({editMode: false});
-     }
+        </div>
+    )
 
-    render() {
-        return (
-            <div>
-                <span>Status:</span>
-                {this.state.editMode ?
-                    <div>
-                        <input onChange={this.onStatusChange} autoFocus={true} value={this.state.status} onBlur={this.deActivateEditMode} />
-                    </div> :
-                    <div onClick={this.activateEditMode}>
-                        <span>{this.props.status || '-----'}</span>
-                    </div>
-                }
-            </div>
-        )
-    }
 }
 
 

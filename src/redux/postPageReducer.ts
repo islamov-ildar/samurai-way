@@ -4,6 +4,7 @@ const postPageActionTypes = {
     ADD_NEW_POST: 'ADD_NEW_POST',
     SET_USER_PROFILE: 'SET_USER_PROFILE',
     SET_STATUS: 'SET_STATUS',
+    DELETE_POST: 'DELETE_POST',
 };
 
 const initialState = {
@@ -34,6 +35,9 @@ const postPageReducer = (state: any = initialState, action: any) => {
         case postPageActionTypes.SET_STATUS: {
             return {...state, status: action.status};
         }
+        case postPageActionTypes.DELETE_POST: {
+            return {...state, posts: state.posts.filter((post: any) => post.id !== action.payload)};
+        }
         default:
             return state;
     }
@@ -43,6 +47,8 @@ const postPageReducer = (state: any = initialState, action: any) => {
 export const addPostActionCreator = (payload: string) => ({type: postPageActionTypes.ADD_NEW_POST, newPostText: payload});
 
 export const setUserProfile = (profile: any) => ({type: postPageActionTypes.SET_USER_PROFILE, profile});
+
+export const deletePostActionCreator = (payload: number) => ({type: postPageActionTypes.DELETE_POST, payload});
 
 export const getUserProfile = (userId: any) => (dispatch: any) => {
     usersAPI.getProfile(userId).then((res: any) => {

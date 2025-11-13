@@ -50,5 +50,10 @@
   },
   "devDependencies": {
     "@types/redux-form": "^8.3.11"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^axios$": "axios/dist/node/axios.cjs"
+    }
   }
 }

@@ -44,30 +44,31 @@ const postPageReducer = (state: any = initialState, action: any) => {
 }
 
 
-export const addPostActionCreator = (payload: string) => ({type: postPageActionTypes.ADD_NEW_POST, newPostText: payload});
+export const addPostActionCreator = (payload: string) => ({
+    type: postPageActionTypes.ADD_NEW_POST,
+    newPostText: payload
+});
 
 export const setUserProfile = (profile: any) => ({type: postPageActionTypes.SET_USER_PROFILE, profile});
 
 export const deletePostActionCreator = (payload: number) => ({type: postPageActionTypes.DELETE_POST, payload});
 
-export const getUserProfile = (userId: any) => (dispatch: any) => {
-    usersAPI.getProfile(userId).then((res: any) => {
-        dispatch(setUserProfile(res.data))
-    })
+export const getUserProfile = (userId: any) => async (dispatch: any) => {
+    const res = await usersAPI.getProfile(userId);
+    dispatch(setUserProfile(res.data))
 };
 
-export const getUserStatus = (payload: string) => (dispatch: any) => {
-    profileAPI.getStatus(payload).then((res: any) => {
-        dispatch(setStatus(res.data))
-    })
+export const getUserStatus = (payload: string) => async (dispatch: any) => {
+    const res = await profileAPI.getStatus(payload);
+
+    dispatch(setStatus(res.data));
 };
 
-export const updateUserStatus = (payload: string) => (dispatch: any) => {
-    profileAPI.updateStatus(payload).then((res: any) => {
-        if (res.data.resultCode === 0) {
-            dispatch(setStatus(payload))
-        }
-    })
+export const updateUserStatus = (payload: string) => async (dispatch: any) => {
+    const res = await profileAPI.updateStatus(payload)
+    if (res.data.resultCode === 0) {
+        dispatch(setStatus(payload))
+    }
 };
 
 export const setStatus = (status: any) => ({type: postPageActionTypes.SET_STATUS, status});

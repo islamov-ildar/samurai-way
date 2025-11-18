@@ -1,4 +1,5 @@
 import {usersAPI} from "../api/api";
+import {updateObjectInArray} from "../utils/object-helpers";
 
 const usersPageActionTypes = {
     FOLLOW: 'FOLLOW',
@@ -50,13 +51,15 @@ const usersPageReducer = (state: any = initialState, action: any) => {
         case usersPageActionTypes.FOLLOW: {
             return {
                 ...state,
-                users: state.users.map((user: User) => user.id === action.userId ? {...user, followed: true} : user)
+                users: updateObjectInArray(state.users, action.userId, 'id', {followed: true})
+                // users: state.users.map((user: User) => user.id === action.userId ? {...user, followed: true} : user)
             };
         }
         case usersPageActionTypes.UNFOLLOW: {
             return {
                 ...state,
-                users: state.users.map((user: User) => user.id === action.userId ? {...user, followed: false} : user)
+                users: updateObjectInArray(state.users, action.userId, 'id', {followed: false})
+                // users: state.users.map((user: User) => user.id === action.userId ? {...user, followed: false} : user)
             };
         }
         case usersPageActionTypes.SET_USERS: {
@@ -99,8 +102,6 @@ export const getUsers = (page: any, pageSize: any) => {
 const followUnfollowFlow = (id: any, isFollow: boolean) => {
     return async (dispatch: any) => {
         dispatch(toggleFollowingProgress(true, id));
-        console.log('followUnfollowFlow id', id);
-        console.log('followUnfollowFlow isFollow:', isFollow);
         const res = isFollow ? await usersAPI.follow(id) : await usersAPI.unFollow(id);
         if (res.data.resultCode === 0) {
             isFollow ? dispatch(followSuccess(id)) : unfollowSuccess(id);

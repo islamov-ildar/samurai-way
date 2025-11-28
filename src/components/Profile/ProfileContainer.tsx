@@ -7,13 +7,13 @@ import {useLocation, useNavigate, useParams} from "react-router";
 
 class ProfileContainer extends React.Component<any, any> {
 
-    componentDidMount() {
+    refreshProfile() {
         console.log('ProfileContainer', this.props);
         let userId = this.props.router.params.userId;
-        if(!userId) {
+        if (!userId) {
             userId = this.props.authorizedUserId;
 
-            if(!userId) {
+            if (!userId) {
                 this.props.router.navigate('/login');
                 return;
             }
@@ -23,14 +23,28 @@ class ProfileContainer extends React.Component<any, any> {
         this.props.getUserProfile(userId);
     }
 
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any) {
+        if (this.props.router.params.userId !== prevProps.router.params.userId) {
+            this.refreshProfile()
+        }
+    }
+
     render() {
 
         return (
             <main className={classes.content}>
-                <Profile {...this.props}
-                         profile={this.props.profile}
-                         status={this.props.status}
-                         updateUserStatus={this.props.updateUserStatus} />
+                <Profile
+                    {...this.props}
+                    isOwner={!this.props.router.params.userId}
+                    profile={this.props.profile}
+                    status={this.props.status}
+                    updateUserStatus={this.props.updateUserStatus}
+                    savePhoto={this.props.savePhoto}
+                />
             </main>
         )
     }
@@ -60,5 +74,5 @@ function withRouter(Component: any) {
 }
 
 export default withRouter(
-    connect(mapStateToProps, {getUserProfile, getUserStatus, updateUserStatus})(ProfileContainer)
+    connect(mapStateToProps, {getUserProfile, getUserStatus, updateUserStatus, savePhoto})(ProfileContainer)
 );

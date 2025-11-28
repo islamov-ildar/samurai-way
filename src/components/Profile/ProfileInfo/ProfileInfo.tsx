@@ -7,17 +7,22 @@ export const ProfileInfo = (props: any) => {
     if (props.profile === null) {
         return (<Preloader/>)
     }
+    const onMainPhotoSelected = (e: any) => {
+        console.log("onMainPhotoSelected", e);
+        if(e.target.files.length){
+            props.savePhoto(e.target.files[0]);
+        }
+    }
+
     return (
         <div>
             <img
                 src="https://img.freepik.com/free-vector/abstract-banner-with-low-poly-plexus-network-communications-design_1048-12914.jpg?semt=ais_hybrid&w=740&q=80"
                 alt="img" width='100%'/>
-            {/*<div>*/}
-            {/*    {props.profile.photos.large && <img src={props.profile.photos.large} alt="ava"/>}*/}
-            {/*</div>            */}
             <div>
                 <img src={props.profile.photos.large || userPhoto} alt="ava"/>
             </div>
+            {props.isOwner && <input type='file' onChange={onMainPhotoSelected} />}
             <div>
                 <ProfileStatusWithHooks status={props.status} updateUserStatus={props.updateUserStatus} />
             </div>

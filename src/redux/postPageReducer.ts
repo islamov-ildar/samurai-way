@@ -71,6 +71,13 @@ export const updateUserStatus = (payload: string) => async (dispatch: any) => {
     }
 };
 
+export const savePhoto = (payload: File) => async (dispatch: any) => {
+    const res = await profileAPI.savePhoto(payload)
+    if (res.data.resultCode === 0) {
+        dispatch(setStatus(payload))
+    }
+};
+
 export const setStatus = (status: any) => ({type: postPageActionTypes.SET_STATUS, status});
 
 export default postPageReducer;

@@ -1,6 +1,7 @@
 import React from "react";
 import {Preloader} from "../../common/Preloader/Preloader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
+import userPhoto from "../../../assets/userPlug.png";
 
 export const ProfileInfo = (props: any) => {
     if (props.profile === null) {
@@ -11,8 +12,11 @@ export const ProfileInfo = (props: any) => {
             <img
                 src="https://img.freepik.com/free-vector/abstract-banner-with-low-poly-plexus-network-communications-design_1048-12914.jpg?semt=ais_hybrid&w=740&q=80"
                 alt="img" width='100%'/>
+            {/*<div>*/}
+            {/*    {props.profile.photos.large && <img src={props.profile.photos.large} alt="ava"/>}*/}
+            {/*</div>            */}
             <div>
-                {props.profile.photos.large && <img src={props.profile.photos.large} alt="ava"/>}
+                <img src={props.profile.photos.large || userPhoto} alt="ava"/>
             </div>
             <div>
                 <ProfileStatusWithHooks status={props.status} updateUserStatus={props.updateUserStatus} />

@@ -5,6 +5,7 @@ const postPageActionTypes = {
     SET_USER_PROFILE: 'SET_USER_PROFILE',
     SET_STATUS: 'SET_STATUS',
     DELETE_POST: 'DELETE_POST',
+    SAVE_PHOTOS_SUCCESS: 'SAVE_PHOTOS_SUCCESS',
 };
 
 const initialState = {
@@ -38,6 +39,10 @@ const postPageReducer = (state: any = initialState, action: any) => {
         case postPageActionTypes.DELETE_POST: {
             return {...state, posts: state.posts.filter((post: any) => post.id !== action.payload)};
         }
+        case postPageActionTypes.SAVE_PHOTOS_SUCCESS: {
+            // console.log('postPageActionTypes', action.payload);
+            return {...state, profile: {...state.profile, photos: action.payload}};
+        }
         default:
             return state;
     }
@@ -52,6 +57,7 @@ export const addPostActionCreator = (payload: string) => ({
 export const setUserProfile = (profile: any) => ({type: postPageActionTypes.SET_USER_PROFILE, profile});
 
 export const deletePostActionCreator = (payload: number) => ({type: postPageActionTypes.DELETE_POST, payload});
+export const savePhotoSuccess = ( payload: any) => ({type: postPageActionTypes.SAVE_PHOTOS_SUCCESS, payload});
 
 export const getUserProfile = (userId: any) => async (dispatch: any) => {
     const res = await usersAPI.getProfile(userId);
@@ -74,7 +80,8 @@ export const updateUserStatus = (payload: string) => async (dispatch: any) => {
 export const savePhoto = (payload: File) => async (dispatch: any) => {
     const res = await profileAPI.savePhoto(payload)
     if (res.data.resultCode === 0) {
-        dispatch(setStatus(payload))
+        console.log('savePhoto', res.data.data.photos)
+        dispatch(savePhotoSuccess(res.data.data.photos))
     }
 };
 

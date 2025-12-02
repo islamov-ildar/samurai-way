@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Profile.module.css";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
-import {getUserProfile, getUserStatus, updateUserStatus} from "../../redux/postPageReducer";
+import {getUserProfile, getUserStatus, savePhoto, updateUserStatus} from "../../redux/postPageReducer";
 import {useLocation, useNavigate, useParams} from "react-router";
 
 class ProfileContainer extends React.Component<any, any> {

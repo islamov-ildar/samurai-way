@@ -9,10 +9,13 @@ export const ProfileInfo = (props: any) => {
     }
     const onMainPhotoSelected = (e: any) => {
         console.log("onMainPhotoSelected", e);
+        console.log("onMainPhotoSelected", props);
         if(e.target.files.length){
             props.savePhoto(e.target.files[0]);
         }
     }
+
+    console.log("profile", props.profile);
 
     return (
         <div>

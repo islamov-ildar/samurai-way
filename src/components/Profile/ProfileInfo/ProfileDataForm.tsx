@@ -1,39 +1,46 @@
 import React from "react";
 import styles from "./ProfileInfo.module.css";
 import {Contact} from "./ProfileInfo";
-import {createField, Input} from "../../common/FormsControls/FormsControls";
+import {createField, Input, TextArea} from "../../common/FormsControls/FormsControls";
 import {reduxForm} from "redux-form";
 
 export const ProfileDataForm = (props: any) => {
+    console.log('ProfileDataForm', props);
     return (
-        <form>
+        <form onSubmit={props.handleSubmit}>
             <button>Save</button>
-            {props.isOwner && <button onClick={() => props.setEditMode(true)}>Edit profile</button>}
             <div>
-                <b>Full name:</b> {createField('FullName', 'fullName', [], Input, {type: 'text'} )}
+                <b>Full name:</b> {createField('FullName', 'fullName', ()=>{}, Input, {type: 'text'} )}
             </div>
             <div>
-                <b>Looking for a job:</b> {props.profile.lookingForAJob ? 'yes' : 'no'}
+                {createField(null, 'lookingForAJob', ()=>{}, Input, {type: 'checkbox'}, 'lookingForAJob' )}
             </div>
             {
-                props.profile.lookingForAJob &&
+                props.initialValues.lookingForAJob &&
                 <div>
-                    <b>My professional skills:</b> {props.profile.lookingForAJobDescriptions}
+                    <b>My professional skills:</b> {props.initialValues.lookingForAJobDescriptions}
+                    {createField('My professional skills', 'lookingForAJobDescription', ()=>{}, TextArea, {type: 'text'} )}
                 </div>
             }
             <div>
-                <b>About me</b> {props.profile.aboutMe}
+                <b>About me</b> {props.initialValues.aboutMe}
+                {createField('About me', 'aboutMe', ()=>{}, TextArea, {type: 'text'} )}
             </div>
+            <div>
+                <b>Looking for a job description</b> {props.initialValues.lookingForAJobDescription}
+                {createField('lookingForAJobDescription', 'lookingForAJobDescription', ()=>{}, TextArea, {type: 'text'} )}
+            </div>
+
             <div className={styles.contact}>
-                <b>Contacts: </b>{Object.keys(props.profile.contacts).map(key => <Contact contactTitle={key}
-                                                                                          contactValue={props.profile.contacts[key]}
+                <b>Contacts: </b>{Object.keys(props.initialValues.contacts).map(key => <Contact contactTitle={key}
+                                                                                          contactValue={props.initialValues.contacts[key]}
                                                                                           key={key}/>)}
             </div>
             <div>
-                {props.profile.fullName}
+                {props.initialValues.fullName}
             </div>
             <div>
-                {props.profile.userId}
+                {props.initialValues.userId}
             </div>
         </form>
     )

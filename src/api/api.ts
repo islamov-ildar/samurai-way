@@ -49,4 +49,7 @@ export const profileAPI = {
             }
         });
     },
+    saveProfile(profile: File) {
+        return instance.put(`profile`, profile);
+    },
 }

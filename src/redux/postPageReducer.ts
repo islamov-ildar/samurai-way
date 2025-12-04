@@ -85,6 +85,16 @@ export const savePhoto = (payload: File) => async (dispatch: any) => {
     }
 };
 
+export const saveProfile = (payload: any) => async (dispatch: any, getState: any) => {
+    const res = await profileAPI.saveProfile(payload);
+    const userId = getState().authReducer.userId;
+
+    if (res.data.resultCode === 0) {
+        console.log('saveProfile', res.data)
+        dispatch(getUserProfile(userId))
+    }
+};
+
 export const setStatus = (status: any) => ({type: postPageActionTypes.SET_STATUS, status});
 
 export default postPageReducer;

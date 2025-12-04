@@ -7,7 +7,13 @@ export const Profile = (props: any) => {
 
     return (
         <main className={classes.content}>
-            <ProfileInfo isOwner={props.isOwner} profile={props.profile} status={props.status} updateUserStatus={props.updateUserStatus} savePhoto={props.savePhoto} />
+            <ProfileInfo
+                isOwner={props.isOwner}
+                profile={props.profile}
+                status={props.status}
+                updateUserStatus={props.updateUserStatus}
+                savePhoto={props.savePhoto}
+                saveProfile={props.saveProfile} />
             <MyPostsContainer />
         </main>
     )

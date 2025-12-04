@@ -3,7 +3,7 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from "../../../assets/userPlug.png";
 import styles from "./ProfileInfo.module.css";
-import {ProfileDataForm, ProfileDataFormReduxForm} from "./ProfileDataForm";
+import {ProfileDataFormReduxForm} from "./ProfileDataForm";
 
 export const ProfileInfo = (props: any) => {
 
@@ -22,6 +22,24 @@ export const ProfileInfo = (props: any) => {
 
     console.log("profile", props.profile);
 
+    const normalizedProfile = {
+        ...props.profile,
+        aboutMe: props.profile.aboutMe || '',
+        lookingForAJobDescription: props.profile.lookingForAJobDescription || '',
+        fullName: props.profile.fullName || '',
+        // contacts тоже нужно нормализовать
+        contacts: Object.keys(props.profile.contacts).reduce((acc, key) => {
+            acc[key] = props.profile.contacts[key] || '';
+            return acc;
+        }, {} as any)
+    };
+
+    const onSubmit = (formData: any) => {
+        console.log("handleSubmit", formData);
+        props.saveProfile(formData);
+        setEditMode(false);
+    }
+
     return (
         <div>
             <img
@@ -35,7 +53,7 @@ export const ProfileInfo = (props: any) => {
                 <ProfileStatusWithHooks status={props.status} updateUserStatus={props.updateUserStatus}/>
             </div>
             {/*{editMode ? <ProfileDataForm profile={props.profile} /> : <ProfileData profile={props.profile} editMode={editMode} setEditMode={setEditMode} isOwner={props.isOwner} />}*/}
-            {editMode ? <ProfileDataFormReduxForm profile={props.profile} /> : <ProfileData profile={props.profile} editMode={editMode} setEditMode={setEditMode} isOwner={props.isOwner} />}
+            {editMode ? <ProfileDataFormReduxForm initialValues={normalizedProfile} onSubmit={onSubmit} /> : <ProfileData profile={props.profile} editMode={editMode} setEditMode={setEditMode} isOwner={props.isOwner} />}
         </div>
     );
 };

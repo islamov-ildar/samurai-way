@@ -92,6 +92,7 @@ export const saveProfile = (payload: any) => async (dispatch: any, getState: any
     if (res.data.resultCode === 0) {
         console.log('saveProfile', res.data)
         dispatch(getUserProfile(userId))
+
     }
 };
 

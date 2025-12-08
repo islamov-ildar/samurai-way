@@ -35,9 +35,9 @@ export const ProfileInfo = (props: any) => {
     };
 
     const onSubmit = (formData: any) => {
-        console.log("handleSubmit", formData);
-        props.saveProfile(formData);
-        setEditMode(false);
+        props.saveProfile(formData).then(() => {setEditMode(false);});
+        console.log("handleSubmit result");
+        //
     }
 
     return (

@@ -1,4 +1,5 @@
 import {profileAPI, usersAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const postPageActionTypes = {
     ADD_NEW_POST: 'ADD_NEW_POST',
@@ -90,9 +91,12 @@ export const saveProfile = (payload: any) => async (dispatch: any, getState: any
     const userId = getState().authReducer.userId;
 
     if (res.data.resultCode === 0) {
-        console.log('saveProfile', res.data)
         dispatch(getUserProfile(userId))
-
+    } else {
+        console.log('saveProfile', res.data)
+        const errorMessage = res.data.messages.length > 0 ? res.data.messages : "Common error";
+        dispatch(stopSubmit("ProfileDataForm", {_error: errorMessage}));
+        return Promise.reject(res.data.messages);
     }
 };
 

@@ -7,12 +7,13 @@ import {login} from "../../redux/authReducer";
 import {Navigate} from "react-router";
 import styles from "../common/FormsControls/FormControls.module.css"
 
-const LoginForm = ({handleSubmit, error}: {handleSubmit: any; error: any}) => <div>
+const LoginForm = ({handleSubmit, error, captchaUrl}: any) => <div>
     <form onSubmit={ handleSubmit }>
         {createField('email', 'email', required, Input, {type: 'text'} )}
         {createField('password', 'password', required, Input, {type: 'password'} )}
         {createField(null, 'rememberMe', required, Input, {type: 'checkbox'}, 'Remember me' )}
         {error && <div className={styles.formSummaryError}>{error}</div>}
+        {captchaUrl && <img src={captchaUrl} alt="123" />}
         <button>Login</button>
     </form>
 </div>
@@ -28,7 +29,7 @@ const Login = (props: any) => {
 
     return (<div>
         <h1>Login</h1>
-        <LoginReduxForm onSubmit={onSubmit} />
+        <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl} />
 
     </div>)
 }

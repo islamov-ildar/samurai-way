@@ -53,3 +53,7 @@ export const profileAPI = {
         return instance.put(`profile`, profile);
     },
 }
+
+export const securityAPI = {
+    getCaptchaUrl() {return instance.get(`security/get-captcha-url`, {})},
+}

@@ -1,7 +1,7 @@
 import React, {Suspense} from 'react';
 import './App.css';
 import {Navbar} from "./components/Navbar/Navbar";
-import {Route, Routes, useLocation, useNavigate, useParams} from "react-router";
+import {Navigate, Route, Routes, useLocation, useNavigate, useParams} from "react-router";
 // import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 // import ProfileContainer from "./components/Profile/ProfileContainer";
@@ -30,6 +30,7 @@ class App extends React.Component<any> {
                     <Navbar/>
                     <div className='app-wrapper-content'>
                         <Routes>
+                            <Route path="/" element={<Navigate to="/profile" replace />} />
                             <Route path="/profile/:userId?"
                                    element={<Suspense fallback={<div>...Loading</div>}><ProfileContainer/></Suspense>}
                             />
@@ -40,6 +41,7 @@ class App extends React.Component<any> {
                                    element={<UsersContainer/>}
                             />
                             <Route path="/login" element={<Login/>}/>
+                            <Route path="*" element={<Navigate to="/" replace />} />
                         </Routes>
                     </div>
                 </div>
